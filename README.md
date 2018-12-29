@@ -8,5 +8,10 @@ df = dd.read_csv('D:\\tmp\\311_Service_Requests.csv',dtype={'Incident Zip': 'obj
        'Vehicle Type': 'object','Agency': 'object'})
 
 df2=dd.read_csv('D:\\tmp\\Agency.csv',dtype={'Agency':'object'})
+-------------------
 df3=df[df['Agency'].isin(df2['Agency'].tolist())].compute()
+-------------------
+#从未排序的列设置新索引非常昂贵
+#许多操作，例如groupby-apply和join on unsorted columns，需要设置索引，如上所述，索引很昂贵
+#df3=df.join(df2,on="Agency") 会报错，原因是没有设置索引。所以我们使用isin的方式。
 
